@@ -1,5 +1,6 @@
 #! /usr/bin/bash
-HOSTNAME=`ifconfig -a |ggrep sppp0 -A 1|grep inet |cut -d" " -f 4`
+#HOSTNAME=`ifconfig -a |ggrep sppp0 -A 1|grep inet |cut -d" " -f 4`
+HOSTNAME=`ifconfig sppp0 |grep "inet"|cut -d" " -f 4`
 PORT="22"
 USER="marty"
 PASS="everglow"
@@ -19,13 +20,13 @@ cat > $TMP << EOF
 log_user 0
 set timeout 20
 puts $TODAY
-puts "-----Begin of XCSF-----"
+puts "<div id=XCSF>"
 spawn ssh -o "PubkeyAuthentication=no" -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" $USER@$HOSTNAME "$CMD"
 expect "password:"
 send "$PASS\r";
 interact
 #expect eof
-puts "-----End of XCSF-----"
+puts "</div>"
 EOF
 
 # run expect script
@@ -33,7 +34,7 @@ EOF
 expect -f $TMP 
 # remove expect script
 rm $TMP
-echo "-----Begin of Disks-----"
+echo "<div id=Disks>"
 sudo raidctl -S
-echo "-----End of Disks-----"
+echo "</div>"
 
