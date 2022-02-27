@@ -19,7 +19,9 @@ cat > $TMP << EOF
 # exp_internal 1 # Uncomment for debug
 log_user 0
 set timeout 20
+puts "<div id=today>"
 puts $TODAY
+puts "</div>"
 puts "<div id=XCSF>"
 spawn ssh -o "PubkeyAuthentication=no" -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" $USER@$HOSTNAME "$CMD"
 expect "password:"
