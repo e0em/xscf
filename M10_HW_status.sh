@@ -1,18 +1,21 @@
 #! /usr/bin/bash
 #HOSTNAME=`ifconfig -a |ggrep sppp0 -A 1|grep inet |cut -d" " -f 4`
-HOSTNAME=`ifconfig sppp0 |grep "inet"|cut -d" " -f 4`
+PLATFORM=`uname -i`
+echo $PLATFORM
+HOSTNAME=`/usr/platform/$PLATFORM/sbin/prtdscp -s`
+# HOSTNAME=`ifconfig sppp0 |grep "inet"|cut -d" " -f 4`
 PORT="22"
 USER="marty"
-PASS="everglow"
+PASS="xscfpassword"
 TODAY=$(date +%F)
 CMD="showhardconf; \
-showenvironment temp; \
-     showenvironment volt; \
-     showenvironment Fan; \
-     showenvironment power; \
-     showenvironment air; \
-     showboards -a; \
-     "
+    showenvironment temp; \
+    showenvironment volt; \
+    showenvironment Fan; \
+    showenvironment power; \
+    showenvironment air; \
+    showboards -a; \
+    "
 TMP=$(mktemp)
 # create expect script
 cat > $TMP << EOF 
